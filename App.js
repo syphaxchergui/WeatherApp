@@ -8,13 +8,14 @@ const navigator = createStackNavigator({
     Home: HomeScreen,
 }, {
   initialRouteName: 'Home',
-  defaultNavigationOptions: {
-    headerStyle: {
-      backgroundColor: '#f4f3f9',
-    },
-    headerTintColor: '#030303',
-    headerTitle: 'Weather App'
-  }
+  
+    //headerStyle: {
+   //   backgroundColor: '#f4f3f9',
+   // },
+    //headerTintColor: '#030303',
+   // headerTitle: 'Weather App'
+   headerMode: 'none'
+  
 });
 
 export default createAppContainer(navigator);

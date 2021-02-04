@@ -1,15 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import { Text, View , StyleSheet, TouchableOpacity, Image, RefreshControl, ScrollView} from 'react-native';
-import { Feather } from '@expo/vector-icons'; 
+import { Text, View , StyleSheet, Image, RefreshControl, ScrollView} from 'react-native';
 import OpenWeatherApi from '../api/OpenWeatherApi';
+import ipstack from '../api/ipstack';
 import SearchBar from '../components/SearchBar';
 import CurrentWeatherBox from '../components/CurrentWeatherBox';
+import publicIP from 'react-native-public-ip';
 
-const wait = (timeout) => {
-    return new Promise(resolve => {
-      setTimeout(resolve, timeout);
-    });
-}
+
 
 const HomeScreen = () => {
     const [location, setLocation] = useState('');
@@ -21,7 +18,6 @@ const HomeScreen = () => {
     const onRefresh = ()=> {
         setRefreshing(true);
         searchApi(currentResult.location.name);
-        console.log(currentResult.location.name)
         isLoaded ? setRefreshing(false) : null;
     };
 
@@ -32,6 +28,20 @@ const HomeScreen = () => {
             setIsLoaded(false);
             const response = await OpenWeatherApi.get(`./current?access_key=d25e55952240f85c50ff3ec8055669a0&query=${city}`);      
             setCurrentResult(response.data);
+            console.log(response)
+            setIsLoaded(true);
+        } catch (err) {
+            console.log('Error'); 
+            setErrorMsg('Something went wrong !')
+        }
+    }
+
+    const searchIPApi = async (ip) => {
+        try{
+            setErrorMsg('');
+            setIsLoaded(false);
+            const response = await ipstack.get(`./${ip}?access_key=926857638b18434de3cb0467273fb9ad`);      
+            searchApi(response.data.city)
             setIsLoaded(true);
         } catch (err) {
             console.log('Error'); 
@@ -41,7 +51,13 @@ const HomeScreen = () => {
 
 
     useEffect(() => {
-        searchApi('Paris');
+        publicIP()
+            .then(ip =>  {
+                searchIPApi(ip)
+                console.log(ip)
+            })
+            .catch(error => console.log(error) );
+        ;
     }, []);
 
 
@@ -74,7 +90,7 @@ const styles = StyleSheet.create({
     viewStyle: {
         flex: 1, 
         alignContent: 'center',
-        backgroundColor: '#fff'
+        backgroundColor: '#121856',
     },
     loadingStyle: {
         justifyContent: 'center',

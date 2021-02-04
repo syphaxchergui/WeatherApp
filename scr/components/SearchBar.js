@@ -4,8 +4,6 @@ import { Feather } from '@expo/vector-icons';
 
 const SearchBar = ({term, onChangeTerm, onEndEditing}) => {
 
-    const screenWidth = Math.round(Dimensions.get('window').width);
-
     return (
     <View style={styles.backgroundStyle}>
         <Feather name="map-pin" style={styles.iconStyle} />
@@ -25,18 +23,18 @@ const SearchBar = ({term, onChangeTerm, onEndEditing}) => {
 const styles = StyleSheet.create({
     backgroundStyle: {
         marginHorizontal: 10,
-        marginVertical: 10,
-        backgroundColor: '#f4f3f9',
+        marginBottom: 10,
+        marginTop: 50,
+        backgroundColor: '#fff',
         height: 50,
         width: Math.round(Dimensions.get('window').width)-20, 
         borderRadius: 30,
         flexDirection: 'row',
-        shadowColor: "#e44e28",
+        shadowColor: "#fff",
         shadowOffset: {
             width: 0,
             height: 6,
         },
-        shadowOpacity: 0.39,
         shadowRadius: 8.30,
         elevation: 20,
     },
