@@ -1,3 +1,3 @@
-#WEATHER APP
+# WEATHER APP
 
 ![alt text](./assets/readme.jpg)
